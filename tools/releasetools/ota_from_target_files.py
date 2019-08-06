@@ -860,30 +860,8 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.Print("         MSM-Xtended ROM by Team-Xtended       ");
   script.Print("***********************************************");
 
-  xtndversion = target_info.GetBuildProp("ro.xtended.display.version")
-  androidver = target_info.GetBuildProp("ro.build.version.release")
-  buildtype = target_info.GetBuildProp("ro.build.type")
-  buildid = target_info.GetBuildProp("ro.build.id")
-  buildday = target_info.GetBuildProp("ro.build.date")
-  securep = target_info.GetBuildProp("ro.build.version.security_patch")
-  device = target_info.GetBuildProp("ro.product.name")
-  manufacturer = target_info.GetBuildProp("ro.product.manufacturer")
-
-  script.Print("***********************************************");
-  script.Print(" ROM version      : %s"%(xtndversion));
-  script.Print("");
-  script.Print(" Android version  : %s"%(androidver));
-  script.Print("");
-  script.Print(" Security patch   : %s"%(securep));
-  script.Print("");
-  script.Print(" Build date       : %s"%(buildday));
-  script.Print("");
-  script.Print(" Build type       : %s"%(buildtype));
-  script.Print("");
-  script.Print(" Device           : %s"%(device));
-  script.Print("");
-  script.Print(" Manufacturer     : %s"%(manufacturer));
-  script.Print("***********************************************");
+  script.AppendExtra("ifelse(is_mounted(\"/system\"), unmount(\"/system\"));")
+  device_specific.FullOTA_InstallBegin()
 
   if OPTIONS.wipe_user_data:
     system_progress -= 0.1
